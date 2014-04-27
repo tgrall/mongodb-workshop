@@ -1,0 +1,8 @@
+{ "name": "MongoComicImporter",
+  "description": "MongoDB Marvel Comit Importer",
+  "version": "1.0.0",
+  "dependencies": {
+    "mongodb": "x.x.x",
+	"marvel-api": "x.x.x"	
+  }
+}
