@@ -1,6 +1,6 @@
 'use strict';
 
-var ComicsService = function (database) {
+var ComicsService = function () {
 
     var mongoDbConnection = require('./mongoConnection.js');
 

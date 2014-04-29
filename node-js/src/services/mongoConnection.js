@@ -1,7 +1,7 @@
 'use strict';
 
 // From : http://afshinm.name/mongodb-singleton-connection-in-nodejs
-var conf = require('../conf/conf');
+var conf = require('../../conf/conf');
 var MongoClient = require('mongodb');
 
 //the MongoDB connection

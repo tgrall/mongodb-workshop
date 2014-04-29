@@ -11,5 +11,9 @@
         "body-parser": "1.0.0",
         "debug": "0.7.4",
         "mongodb": "1.4.2"
+    },
+    "devDependencies": {
+        "assert": "1.1.1",
+        "lodash": "2.4.1"
     }
 }
