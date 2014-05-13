@@ -8,8 +8,16 @@ var ComicsRoutes = function (comicsService) {
         });
     };
 
+    var _searchByTitle = function (req, res) {
+        var keyword = req.query.title;
+        comicsService.findByTitle(keyword, function (comics) {
+            res.status(200).send(comics);
+        });
+    };
+
     return {
-        iAmFeelingLucky: _iAmFeelingLucky
+        iAmFeelingLucky: _iAmFeelingLucky,
+        searchByTitle: _searchByTitle
     };
 
 };

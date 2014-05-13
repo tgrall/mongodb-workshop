@@ -15,7 +15,7 @@ module.exports = function (callback) {
     }
 
     MongoClient.connect(conf.MONGO_URL, function (err, databaseConnection) {
-        if (err) throw new Error(error);
+        if (err) throw new Error(err);
         connectionInstance = databaseConnection;
         callback(databaseConnection);
     });

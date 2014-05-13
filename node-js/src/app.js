@@ -18,5 +18,6 @@ var comicsService = new ComicsService();
 // Configure routes
 var comicsRoutes = new ComicsRoutes(comicsService);
 app.get('/comics/random', comicsRoutes.iAmFeelingLucky);
+app.get('/comics/search', comicsRoutes.searchByTitle);
 
 module.exports = app;
