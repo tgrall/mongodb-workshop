@@ -8,16 +8,22 @@ var ComicsRoutes = function (comicsService) {
         });
     };
 
-    var _searchByTitle = function (req, res) {
-        var keyword = req.query.title;
-        comicsService.findByTitle(keyword, function (comics) {
-            res.status(200).send(comics);
-        });
+    var _search = function (req, res) {
+        if (req.query.title) {
+            var keyword = req.query.title;
+            comicsService.findByTitle(keyword, function (comics) {
+                res.status(200).send(comics);
+            });
+        }
+        else {
+            // TODO manage JSON content for errors
+            res.status(400).send("Search query not supported.");
+        }
     };
 
     return {
         iAmFeelingLucky: _iAmFeelingLucky,
-        searchByTitle: _searchByTitle
+        search: _search
     };
 
 };

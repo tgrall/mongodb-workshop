@@ -9,7 +9,7 @@ var ComicsService = function () {
     var _findOne = function (callback) {
         mongoDbConnection(function (connection) {
             connection.collection(COMICS_COLLECTION_NAME).findOne(function (err, item) {
-                if (err) throw new Error(error);
+                if (err) throw new Error(err);
                 callback(item);
             });
         });
@@ -19,7 +19,7 @@ var ComicsService = function () {
         mongoDbConnection(function (connection) {
             var searchQuery = keyword ? {"title": new RegExp(keyword, "i")} : {};
             connection.collection(COMICS_COLLECTION_NAME).find(searchQuery).toArray(function (err, items) {
-                if (err) throw new Error(error);
+                if (err) throw new Error(err);
                 callback(items);
             });
         });
