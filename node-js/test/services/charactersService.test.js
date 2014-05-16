@@ -8,9 +8,9 @@ var charactersService = new CharactersService();
 
 describe('CharactersService', function () {
 
-    describe('#findOne()', function () {
+    describe('#findOneRandomly()', function () {
         it('should return a Character', function (done) {
-            charactersService.findOne(function (character) {
+            charactersService.findOneRandomly(function (character) {
                 var characterAttributes = _.keys(character);
                 assert(_.contains(characterAttributes, '_id'));
                 assert(_.contains(characterAttributes, 'name'));

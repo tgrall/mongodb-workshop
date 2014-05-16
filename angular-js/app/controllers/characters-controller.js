@@ -5,10 +5,25 @@ charactersControllers.controller(
     [
         '$scope',
         '$http',
-        function ($scope, $http) {
-            $http.get('api/characters').success(function (data) {
-                $scope.characters = data;
+        '$location',
+        function ($scope, $http, $location) {
+            $http.get('api/characters').success(function (characters) {
+                $scope.characters = characters;
             });
+
+            $scope.imFeelingLucky = function() {
+                $http.get('api/characters/random').success(function (randomCharacter) {
+                    console.log(randomCharacter);
+                    $location.path('characters/' + randomCharacter._id);
+                });
+            };
+
+            $scope.search = function() {
+                console.log('search : ' + $scope.searchQuery);
+                $http.get('api/characters/search?name=' + $scope.searchQuery).success(function (characters) {
+                    $scope.characters = characters;
+                });
+            };
         }
     ]
 );
@@ -20,8 +35,8 @@ charactersControllers.controller(
         '$http',
         '$routeParams',
         function ($scope, $http, $routeParams) {
-            $http.get('api/characters/' + $routeParams.characterId).success(function (data) {
-                $scope.character = data;
+            $http.get('api/characters/' + $routeParams.characterId).success(function (character) {
+                $scope.character = character;
             });
         }
     ]

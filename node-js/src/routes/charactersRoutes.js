@@ -3,7 +3,7 @@
 var CharactersRoutes = function (charactersService) {
 
     var _iAmFeelingLucky = function (req, res) {
-        charactersService.findOne(function (character) {
+        charactersService.findOneRandomly(function (character) {
             res.status(200).send(character);
         });
     };
@@ -13,6 +13,19 @@ var CharactersRoutes = function (charactersService) {
         charactersService.findById(id, function (character) {
             res.status(200).send(character);
         });
+    };
+
+    var _search = function (req, res) {
+        if (req.query.name) {
+            var name = req.query.name;
+            charactersService.findByName(name, 25, 0, function (characters) {
+                res.status(200).send(characters);
+            });
+        }
+        else {
+            // TODO manage JSON content for errors
+            res.status(400).send("Search query not supported.");
+        }
     };
 
     var _getAll = function (req, res) {
@@ -25,6 +38,7 @@ var CharactersRoutes = function (charactersService) {
     return {
         iAmFeelingLucky: _iAmFeelingLucky,
         get: _get,
+        search: _search,
         getAll: _getAll
     };
 
