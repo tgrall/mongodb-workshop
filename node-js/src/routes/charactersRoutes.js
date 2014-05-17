@@ -2,6 +2,8 @@
 
 var CharactersRoutes = function (charactersService) {
 
+    var CHARACTERS_PAGE_SIZE = 15;
+
     var _iAmFeelingLucky = function (req, res) {
         charactersService.findOneRandomly(function (character) {
             res.status(200).send(character);
@@ -29,8 +31,9 @@ var CharactersRoutes = function (charactersService) {
     };
 
     var _getAll = function (req, res) {
-        // TODO get pagination parameters
-        charactersService.findAll(25, 0, function (characters) {
+        var page = req.query.page ? parseInt(req.query.page, 10) : 1;
+        var skip = CHARACTERS_PAGE_SIZE * (page - 1);
+        charactersService.findAll(CHARACTERS_PAGE_SIZE, skip, function (characters) {
             res.status(200).send(characters);
         });
     };

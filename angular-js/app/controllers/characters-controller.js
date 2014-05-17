@@ -1,4 +1,4 @@
-var charactersControllers = angular.module('charactersControllers', []);
+var charactersControllers = angular.module('charactersControllers', ['ui.bootstrap']);
 
 charactersControllers.controller(
     'CharactersListCtrl',
@@ -7,19 +7,27 @@ charactersControllers.controller(
         '$http',
         '$location',
         function ($scope, $http, $location) {
-            $http.get('api/characters').success(function (characters) {
-                $scope.characters = characters;
-            });
+            var renderCharacters = function (charactersPage) {
+                $scope.characters = charactersPage.items;
+                $scope.totalItems = charactersPage.totalItems;
+                $scope.currentPage = charactersPage.currentPage;
+                $scope.itemsPerPage = charactersPage.itemsPerPage;
+                $scope.maxSize = 10;
+            };
 
-            $scope.imFeelingLucky = function() {
+            $http.get('api/characters').success(renderCharacters);
+
+            $scope.pageChanged = function () {
+                $http.get('api/characters?page=' + $scope.currentPage).success(renderCharacters);
+            };
+
+            $scope.imFeelingLucky = function () {
                 $http.get('api/characters/random').success(function (randomCharacter) {
-                    console.log(randomCharacter);
                     $location.path('characters/' + randomCharacter._id);
                 });
             };
 
-            $scope.search = function() {
-                console.log('search : ' + $scope.searchQuery);
+            $scope.search = function () {
                 $http.get('api/characters/search?name=' + $scope.searchQuery).success(function (characters) {
                     $scope.characters = characters;
                 });
