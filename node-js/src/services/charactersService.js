@@ -6,6 +6,15 @@ var CharactersService = function () {
 
     var mongoDbConnection = require('./mongoConnection.js');
 
+    var toCharacterPage = function (items, count, limit, skip) {
+        return {
+            'totalItems': count,
+            'itemsPerPage': limit,
+            'currentPage': (skip / limit) + 1,
+            'items': items
+        };
+    }
+
     var _findOneRandomly = function (callback) {
         mongoDbConnection(function (connection) {
             var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
@@ -34,10 +43,16 @@ var CharactersService = function () {
 
     var _findByName = function (name, limit, skip, callback) {
         mongoDbConnection(function (connection) {
+            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
             var searchQuery = name ? {"name": new RegExp(name, "i")} : {};
-            connection.collection(CHARACTERS_COLLECTION_NAME).find(searchQuery).limit(limit).skip(skip).toArray(function (err, item) {
+            // 1- Count characters
+            collection.count(searchQuery, function (err, count) {
                 if (err) throw new Error(err);
-                callback(item);
+                // 2- Search and paginate characters
+                collection.find(searchQuery).limit(limit).skip(skip).toArray(function (err, items) {
+                    if (err) throw new Error(err);
+                    callback(toCharacterPage(items, count, limit, skip));
+                });
             });
         });
     };
@@ -51,12 +66,7 @@ var CharactersService = function () {
                 // 2- Paginate characters
                 collection.find().limit(limit).skip(skip).toArray(function (err, items) {
                     if (err) throw new Error(err);
-                    callback({
-                        'totalItems': count,
-                        'itemsPerPage': limit,
-                        'currentPage': (skip / limit) + 1,
-                        'items': items
-                    });
+                    callback(toCharacterPage(items, count, limit, skip));
                 });
             });
         });

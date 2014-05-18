@@ -13,20 +13,26 @@ var CharactersRoutes = function (charactersService) {
     var _get = function (req, res) {
         var id = parseInt(req.param('id'), 10);
         charactersService.findById(id, function (character) {
-            res.status(200).send(character);
+            if (character !== null) {
+                res.status(200).send(character);
+            }
+            else {
+                res.status(404).send('Character not found !')
+            }
         });
     };
 
     var _search = function (req, res) {
         if (req.query.name) {
             var name = req.query.name;
-            charactersService.findByName(name, 25, 0, function (characters) {
+            var page = req.query.page ? parseInt(req.query.page, 10) : 1;
+            var skip = CHARACTERS_PAGE_SIZE * (page - 1);
+            charactersService.findByName(name, CHARACTERS_PAGE_SIZE, skip, function (characters) {
                 res.status(200).send(characters);
             });
         }
         else {
-            // TODO manage JSON content for errors
-            res.status(400).send("Search query not supported.");
+            res.status(400).send('Search query not supported.');
         }
     };
 

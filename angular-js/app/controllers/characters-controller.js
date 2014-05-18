@@ -18,7 +18,12 @@ charactersControllers.controller(
             $http.get('api/characters').success(renderCharacters);
 
             $scope.pageChanged = function () {
-                $http.get('api/characters?page=' + $scope.currentPage).success(renderCharacters);
+                if ($scope.searchQuery) {
+                    $http.get('api/characters/search?name=' + $scope.searchQuery + '&page=' + $scope.currentPage).success(renderCharacters);
+                }
+                else {
+                    $http.get('api/characters?page=' + $scope.currentPage).success(renderCharacters);
+                }
             };
 
             $scope.imFeelingLucky = function () {
@@ -28,9 +33,12 @@ charactersControllers.controller(
             };
 
             $scope.search = function () {
-                $http.get('api/characters/search?name=' + $scope.searchQuery).success(function (characters) {
-                    $scope.characters = characters;
-                });
+                if ($scope.searchQuery.length === 0) {
+                    $http.get('api/characters').success(renderCharacters);
+                }
+                else {
+                    $http.get('api/characters/search?name=' + $scope.searchQuery).success(renderCharacters);
+                }
             };
         }
     ]

@@ -2,16 +2,16 @@
 
 <div data-ng-controller="CharactersListCtrl">
 
-    <div class="text-center">
-        <form class="form-inline">
-            <input class="form-control" data-ng-model="searchQuery" style="width: 25%;">
-            <button class="btn btn-default" data-ng-click="search()">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </button>
-            <button class="btn btn-primary" data-ng-click="imFeelingLucky()">
-                <span class="glyphicon glyphicon-thumbs-up"></span> I'm Feeling Lucky !
-            </button>
-        </form>
+    <div class="row text-center">
+        <div class="col-md-4 col-md-offset-4 input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input class="form-control" data-ng-model="searchQuery" data-ng-change="search()">
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 20px;">
+        <button class="btn btn-primary" data-ng-click="imFeelingLucky()">
+            <span class="glyphicon glyphicon-thumbs-up"></span> I'm Feeling Lucky !
+        </button>
     </div>
 
     <table class="table table-striped table-condensed table-hover" style="margin-top: 40px;">
@@ -21,7 +21,7 @@
             <th>Name</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody data-link="row" class="rowlink">
         <tr data-ng-repeat="character in characters">
             <td>
                 <a href="#/characters/{{character._id}}">{{character._id}}</a>
