@@ -19,13 +19,13 @@ var marvel = api.createClient({
 
 function getIdFromURI(type, uri) {
 	var commonURI = "http://gateway.marvel.com/v1/public/"+ type;
-	return uri.substring( commonURI.length + 1 );	
+	return Number( uri.substring( commonURI.length + 1 ) );
 }
 
 function addIdToItems(types, object) {
 	for (var i in types) {
 		type = types[i];
-		if (object.type) {
+		if (object[type]) {
 			itemsToCheck = object[type];
 			if (itemsToCheck) {
 				for (var j in itemsToCheck.items) {
