@@ -22,13 +22,13 @@ var comicsService = new ComicsService();
 var charactersService = new CharactersService();
 
 // Configure routes
-var comicsRoutes = new ComicsRoutes(comicsService);
-app.get('/api/comics/random', comicsRoutes.iAmFeelingLucky);
-app.get('/api/comics/search', comicsRoutes.search);
 var charactersRoute = new CharactersRoutes(charactersService);
 app.get('/api/characters/random', charactersRoute.iAmFeelingLucky);
 app.get('/api/characters/search', charactersRoute.search);
 app.get('/api/characters', charactersRoute.getAll);
 app.get('/api/characters/:id', charactersRoute.get);
+var comicsRoutes = new ComicsRoutes(comicsService);
+app.get('/api/comics/search', comicsRoutes.search);
+app.get('/api/comics/:id', comicsRoutes.get);
 
 module.exports = app;

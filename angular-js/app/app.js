@@ -1,6 +1,8 @@
 var mongodbWorkshopApp = angular.module('mongodbWorkshopApp', [
     'ngRoute',
-    'charactersControllers'
+    'charactersControllers',
+    'comicsControllers',
+    'mongodbWorkshopFilters'
 ]);
 
 mongodbWorkshopApp.config(['$routeProvider',
@@ -18,7 +20,12 @@ mongodbWorkshopApp.config(['$routeProvider',
                 controller: 'CharactersDetailsCtrl'
             }).
             when('/comics', {
-                templateUrl: 'partials/comics.html'
+                templateUrl: 'partials/comics-search.html',
+                controller: 'ComicsSearchCtrl'
+            }).
+            when('/comics/:comicId', {
+                templateUrl: 'partials/comics-details.html',
+                controller: 'ComicsDetailsCtrl'
             }).
             when('/creators', {
                 templateUrl: 'partials/creators.html'

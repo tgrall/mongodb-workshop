@@ -12,12 +12,20 @@
         </div>
     </div>
 
-    <h3>Related comics</h3>
+    <div data-ng-show="character.comics.returned > 0">
+        <h3>Related comics</h3>
 
-    <ul>
-        <li data-ng-repeat="comic in character.comics.items">
-            {{comic.name}}
-        </li>
-    </ul>
+        <p data-ng-show="character.comics.returned != character.comics.available">
+            This is just a sampled list ... ({{character.comics.returned}} / {{character.comics.available}})
+        </p>
 
+        <ul>
+            <li data-ng-repeat="comic in character.comics.items">
+                <a data-ng-href="#/comics/{{comic.id}}">
+                    {{comic.name}}
+                </a>
+            </li>
+        </ul>
+
+    </div>
 </div>
