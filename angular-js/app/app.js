@@ -1,6 +1,10 @@
 var mongodbWorkshopApp = angular.module('mongodbWorkshopApp', [
     'ngRoute',
-    'charactersControllers'
+    'charactersControllers',
+    'comicsControllers',
+    'creatorsControllers',
+    'pricesControllers',
+    'mongodbWorkshopFilters'
 ]);
 
 mongodbWorkshopApp.config(['$routeProvider',
@@ -18,10 +22,24 @@ mongodbWorkshopApp.config(['$routeProvider',
                 controller: 'CharactersDetailsCtrl'
             }).
             when('/comics', {
-                templateUrl: 'partials/comics.html'
+                templateUrl: 'partials/comics-search.html',
+                controller: 'ComicsSearchCtrl'
+            }).
+            when('/comics/:comicId', {
+                templateUrl: 'partials/comics-details.html',
+                controller: 'ComicsDetailsCtrl'
             }).
             when('/creators', {
-                templateUrl: 'partials/creators.html'
+                templateUrl: 'partials/creators-search.html',
+                controller: 'CreatorsSearchCtrl'
+            }).
+            when('/creators/:creatorId', {
+                templateUrl: 'partials/creators-details.html',
+                controller: 'CreatorsDetailsCtrl'
+            }).
+            when('/prices', {
+                templateUrl: 'partials/prices.html',
+                controller: 'PricesRepartitionCtrl'
             }).
             otherwise({
                 redirectTo: '/'

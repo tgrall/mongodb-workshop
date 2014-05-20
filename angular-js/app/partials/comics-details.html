@@ -1,0 +1,41 @@
+<h1><span class="glyphicon glyphicon-user"></span> Comics</h1>
+
+<div data-ng-controller="ComicsDetailsCtrl">
+    <h2>{{comic.title}}</h2>
+
+    <div class="row">
+        <div class="col-md-2">
+            <img data-ng-src="{{comic.thumbnail.path}}.{{comic.thumbnail.extension}}" class="img-responsive"/>
+        </div>
+        <div class="col-md-8 text-justify">
+            <p>
+                {{comic.description}}
+            </p>
+
+            <p>
+                <b>Format</b> : {{comic.format}}
+            </p>
+
+            <p>
+                <b>Price</b> : USD {{comic.prices[0].price}}
+            </p>
+
+            <p>
+                <a data-ng-href="{{comic.urls[0].url}}" class="btn btn-info" target="_blank">
+                    <span class="glyphicon glyphicon-new-window"></span> More info ...
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div data-ng-show="comic.creators.returned > 0">
+        <h3>Creators</h3>
+
+        <ul>
+            <li data-ng-repeat="creator in comic.creators.items">
+                {{creator.name}} ({{creator.role}})
+            </li>
+        </ul>
+    </div>
+
+</div>

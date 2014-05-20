@@ -13,7 +13,7 @@ var CharactersService = function () {
             'currentPage': (skip / limit) + 1,
             'items': items
         };
-    }
+    };
 
     var _findOneRandomly = function (callback) {
         mongoDbConnection(function (connection) {

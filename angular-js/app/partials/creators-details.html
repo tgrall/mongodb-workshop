@@ -1,0 +1,27 @@
+<h1><span class="glyphicon glyphicon-user"></span> Creators</h1>
+
+<div data-ng-controller="CreatorsDetailsCtrl">
+    <h2>{{creator.fullName}}</h2>
+
+    <div class="row">
+        <div class="col-md-2">
+            <img data-ng-src="{{creator.thumbnail.path}}.{{creator.thumbnail.extension}}" class="img-responsive"/>
+        </div>
+        <div class="col-md-8 text-justify">
+            <h3>Related comics</h3>
+
+            <p data-ng-show="creator.comics.returned != creator.comics.available">
+                This is just a sampled list ... ({{creator.comics.returned}} / {{creator.comics.available}})
+            </p>
+
+            <ul>
+                <li data-ng-repeat="comic in creator.comics.items">
+                    <a data-ng-href="#/comics/{{comic.id}}">
+                        {{comic.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

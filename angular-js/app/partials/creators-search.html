@@ -1,0 +1,46 @@
+<h1><span class="glyphicon glyphicon-pencil"></span> Creators</h1>
+
+<div data-ng-controller="CreatorsSearchCtrl">
+
+    <div class="row text-center">
+        <h2>Search by Comic's name</h2>
+
+        <div class="col-md-4 col-md-offset-4 input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input class="form-control" data-ng-model="searchQuery" data-ng-change="search()" placeholder="Comic name ...">
+        </div>
+
+    </div>
+
+    <div data-ng-show="creators.length > 0">
+        <table class="table table-striped table-condensed table-hover" style="margin-top: 40px;">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody data-link="row" class="rowlink">
+            <tr data-ng-repeat="creator in creators">
+                <td>
+                    <a href="#/creators/{{creator._id}}">{{creator._id}}</a>
+                </td>
+                <td>{{creator.fullName}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <pagination ng-model="currentPage"
+                        ng-change="pageChanged()"
+                        total-items="totalItems"
+                        items-per-page="itemsPerPage"
+                        max-size="maxSize"
+                        num-pages="numPages"
+                        boundary-links="true"
+                        rotate="false">
+            </pagination>
+        </div>
+    </div>
+
+</div>
