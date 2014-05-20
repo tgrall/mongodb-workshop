@@ -5,8 +5,7 @@ comicsControllers.controller(
     [
         '$scope',
         '$http',
-        '$location',
-        function ($scope, $http, $location) {
+        function ($scope, $http) {
             var renderComics = function (comicsPage) {
                 $scope.comics = comicsPage.items;
                 $scope.totalItems = comicsPage.totalItems;
@@ -35,7 +34,6 @@ comicsControllers.controller(
         }
     ]
 );
-
 
 charactersControllers.controller(
     'ComicsDetailsCtrl',

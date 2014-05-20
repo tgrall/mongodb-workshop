@@ -28,4 +28,14 @@
         </div>
     </div>
 
+    <div data-ng-show="comic.creators.returned > 0">
+        <h3>Creators</h3>
+
+        <ul>
+            <li data-ng-repeat="creator in comic.creators.items">
+                {{creator.name}} ({{creator.role}})
+            </li>
+        </ul>
+    </div>
+
 </div>

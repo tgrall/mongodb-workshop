@@ -54,4 +54,15 @@ describe('ComicsService', function () {
         });
     });
 
+    describe('#aggregatePrintPrices()', function () {
+        it('should return aggregated prices', function (done) {
+            comicsService.aggregatePrintPrices(function (prices) {
+                assert.equal(prices.length, 68);
+                assert.equal(prices[0]._id, 0.1);
+                assert.equal(prices[0].total, 544);
+                done();
+            });
+        });
+    });
+
 });
