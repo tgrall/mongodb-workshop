@@ -8,36 +8,47 @@ var comicsService = new ComicsService();
 
 describe('ComicsService', function () {
 
-    describe('#findOne()', function () {
-        it('should return a Comic', function (done) {
-            comicsService.findOne(function (comic) {
-                var comicAttributes = _.keys(comic);
-                assert(_.contains(comicAttributes, '_id'));
-                assert(_.contains(comicAttributes, 'title'));
-                assert(_.contains(comicAttributes, 'description'));
+    describe('#findById()', function () {
+        it('should return null when id is unknown', function (done) {
+            comicsService.findById(0, function (comic) {
+                assert(comic === null);
+                done();
+            });
+        });
+        it('should return Hulk (2008) #17 when _id is 25369', function (done) {
+            comicsService.findById(25369, function (comic) {
+                assert(comic !== null);
+                assert.equal(comic._id, 25369);
+                assert.equal(comic.title, 'Hulk (2008) #17');
                 done();
             });
         });
     });
 
-    describe('#findByTitle()', function () {
+    describe('#searchByText()', function () {
         it('should return an empty array when the comic\'s title corresponds to nothing', function (done) {
-            comicsService.findByTitle('xxxxxx', function (comics) {
-                assert(_.isEmpty(comics));
+            comicsService.searchByText('xxxxxxxxxxxxxxx', 20, 0, function (comicsPage) {
+                assert.equal(comicsPage.totalItems, 0);
+                assert.equal(comicsPage.currentPage, 1);
+                assert.equal(comicsPage.itemsPerPage, 20);
+                assert.equal(comicsPage.items.length, 0);
                 done();
             });
         });
-        it('should return one Comic when the comic\'s title corresponds to SPIDERMAN', function (done) {
-            comicsService.findByTitle('SPIDERMAN', function (comics) {
-                assert.equal(comics.length, 1);
-                assert(_.contains(comics[0].title, 'SPIDERMAN'));
+        it('should return one Comic when the comic\'s title corresponds to Spiderman', function (done) {
+            comicsService.searchByText('spiderman', 20, 0, function (comicsPage) {
+                assert.equal(comicsPage.totalItems, 1);
+                assert.equal(comicsPage.currentPage, 1);
+                assert.equal(comicsPage.itemsPerPage, 20);
+                assert.equal(comicsPage.items.length, 1);
                 done();
             });
         });
-        it('should return one Comic when the comic\'s title corresponds to a substring of SPIDERMAN', function (done) {
-            comicsService.findByTitle('SPIDERM', function (comics) {
-                assert.equal(comics.length, 1);
-                assert(_.contains(comics[0].title, 'SPIDERMAN'));
+        it('should return one page of Comics when the comic\'s title corresponds to Hulk', function (done) {
+            comicsService.searchByText('hulk', 20, 0, function (comicsPage) {
+                assert.equal(comicsPage.currentPage, 1);
+                assert.equal(comicsPage.itemsPerPage, 20);
+                assert.equal(comicsPage.items.length, 20);
                 done();
             });
         });
