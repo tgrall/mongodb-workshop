@@ -30,5 +30,6 @@ app.get('/api/characters/:id', charactersRoute.get);
 var comicsRoutes = new ComicsRoutes(comicsService);
 app.get('/api/comics/search', comicsRoutes.search);
 app.get('/api/comics/:id', comicsRoutes.get);
+app.get('/api/comics/groupBy/price', comicsRoutes.groupByPrice);
 
 module.exports = app;

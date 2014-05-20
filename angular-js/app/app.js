@@ -2,6 +2,7 @@ var mongodbWorkshopApp = angular.module('mongodbWorkshopApp', [
     'ngRoute',
     'charactersControllers',
     'comicsControllers',
+    'pricesControllers',
     'mongodbWorkshopFilters'
 ]);
 
@@ -29,6 +30,10 @@ mongodbWorkshopApp.config(['$routeProvider',
             }).
             when('/creators', {
                 templateUrl: 'partials/creators.html'
+            }).
+            when('/prices', {
+                templateUrl: 'partials/prices.html',
+                controller: 'PricesRepartitionCtrl'
             }).
             otherwise({
                 redirectTo: '/'

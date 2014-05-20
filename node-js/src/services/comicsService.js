@@ -54,9 +54,28 @@ var ComicsService = function () {
         });
     };
 
+    var _aggregatePrintPrices = function (callback) {
+        mongoDbConnection(function (connection) {
+            var collection = connection.collection(COMICS_COLLECTION_NAME);
+            collection.aggregate(
+                [
+                    {$unwind: "$prices"},
+                    {$match: {"prices.type": "printPrice", "prices.price": {$gt: 0}}},
+                    {$group: {_id: "$prices.price", total: {$sum: 1}}},
+                    {$sort: {_id: 1}}
+                ],
+                function (err, result) {
+                    if (err) throw new Error(err);
+                    callback(result);
+                }
+            );
+        });
+    };
+
     return {
         findById: _findById,
-        searchByText: _searchByText
+        searchByText: _searchByText,
+        aggregatePrintPrices: _aggregatePrintPrices
     };
 };
 

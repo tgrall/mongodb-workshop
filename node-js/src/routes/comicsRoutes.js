@@ -30,9 +30,16 @@ var ComicsRoutes = function (comicsService) {
         }
     };
 
+    var _groupByPrice = function (req, res) {
+        comicsService.aggregatePrintPrices(function (result) {
+            res.status(200).send(result);
+        });
+    };
+
     return {
         get: _get,
-        search: _search
+        search: _search,
+        groupByPrice: _groupByPrice
     };
 
 };
