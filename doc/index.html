@@ -451,7 +451,11 @@ db.users.findOne( { category : "Junior" }  );
 
   		  <li>Import Data<br/>
   			  	The Comics database has been exported from an existing one, you can import the data using the following command
-          		<pre>mongorestore $WORKSHOP_HOME/data/comics</pre>
+          		<pre>
+unzip $WORKSHOP_HOME/data/comics.zip
+
+mongorestore $WORKSHOP_HOME/data/comics
+              </pre>
  				<br/>
 
 				You have now a new comics database, look into it using the following commands:
@@ -702,7 +706,14 @@ db.characters.dropIndex({ "_fts" : "text", "_ftsx" : 1 });
 	<h1>Geospatcial Queries</h1>
 	<section id="agg-fwk">
 		First you must import the Geo database using the following command:
-    <pre>mongorestore $WORKSHOP_HOME/data/geo</pre>
+
+
+
+    <pre>
+unzip $WORKSHOP_HOME/data/geo.zip
+
+mongorestore $WORKSHOP_HOME/data/geo
+    </pre>
 		This database contains 3 collections:
 		<ul>
 			<li>airports : US Airport name, type and location</li>
