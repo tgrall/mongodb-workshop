@@ -92,7 +92,7 @@ public class CharactersServiceTest extends WorkshopTest {
         DBObject query = QueryBuilder.start().put("_id").is(id).get();
         service.charactersCollection.remove(query);
         CharacterLight newChar  = new CharacterLight();
-        newChar.setId(id);
+        newChar.set_id(id);
         newChar.setName("Breizhman");
         newChar.setDescription("This is a new super hero from Bretagne");
         service.insertCharacter(newChar);
@@ -100,11 +100,11 @@ public class CharactersServiceTest extends WorkshopTest {
         DBObject dbo = service.get(id);
 
         assertNotNull("The char 123 should be present in the DB", dbo);
-        assertNull("The char 123 should have a thumbnail", dbo.get("thumbnail") );
+        assertNull("The char 123 should have a thumbnail", dbo.get("thumbnail"));
 
         // insert with Thumbnail
         newChar  = new CharacterLight();
-        newChar.setId(id);
+        newChar.set_id(id);
         newChar.setName("Breizhman");
         newChar.setDescription("This is a new super hero from Bretagne");
 

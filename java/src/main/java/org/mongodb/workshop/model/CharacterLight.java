@@ -23,7 +23,7 @@ import org.mongodb.morphia.annotations.Id;
 public class CharacterLight {
 
     @Id
-    int id;
+    int _id;
 
     String name;
 
@@ -35,12 +35,12 @@ public class CharacterLight {
     public CharacterLight() {
     }
 
-    public int getId() {
-        return id;
+    public int get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -70,7 +70,7 @@ public class CharacterLight {
     @Override
     public String toString() {
         return "CharacterLight{" +
-                "id=" + id +
+                "_id=" + _id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

@@ -123,7 +123,7 @@ public class CharactersService {
     @ApiOperation(value = "Create a new character")
     public int insertCharacter( CharacterLight character) {
        datastore.save(character);
-       return character.getId();
+       return character.get_id();
 
     }
 
