@@ -45,6 +45,7 @@ public class CharactersServiceTest extends WorkshopTest {
     @Test
     public void testGetOneCharacter() throws Exception {
         DBObject character = service.get(1009718);
+        assertNotNull("Character should not be null", character );
         assertEquals("Wolverine", character.get("name"));
         assertNotNull("comics field should not be null", character.get("comics") );
     }
@@ -59,6 +60,7 @@ public class CharactersServiceTest extends WorkshopTest {
     @Test
     public void testSearch() throws Exception {
         DBObject result = service.search(1, "Hulk");
+        assertNotNull("Result should not be null", result );
         assertTrue("Search with 'Hulk' should return more than 1 document", ((Long)result.get("totalItems") > 1)   );
     }
 
@@ -76,12 +78,14 @@ public class CharactersServiceTest extends WorkshopTest {
         //remove the story in case it is present
         service.charactersCollection.update( query , unsetUpdate  );
         DBObject obj = service.get(1009144);
+        assertNotNull("Result should not be null", obj );
         assertNull(obj.get("story"));
 
         // do the update
         Story story = new Story("This is a new story for the character!");
         service.putStory( id , story  );
         obj = service.get(1009144);
+        assertNotNull("Result should not be null", obj );
         assertNotNull(obj.get("story"));
 
     }

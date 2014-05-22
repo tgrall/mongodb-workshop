@@ -20,16 +20,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.workshop.model.CharacterLight;
-import org.mongodb.workshop.model.ResultDBObject;
 import org.mongodb.workshop.model.Story;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
-import java.util.Random;
-import java.util.regex.Pattern;
 
 @Api(value = "/characters", description = "API for the Characters")
 @Path("/characters")
@@ -51,34 +47,27 @@ public class CharactersService {
     @Path("/")
     @ApiOperation(value = "Return Characters using pagination")
     public DBObject all(@DefaultValue("1") @QueryParam("page")  int page) {
-        long count = charactersCollection.count();
-        int skip = ITEMS_PER_PAGE * (page -1);
-        DBCursor cursor = charactersCollection.find().skip(skip).limit(ITEMS_PER_PAGE);
-        List<DBObject> items = cursor.toArray( cursor.size() );
-        ResultDBObject result = new ResultDBObject( count, ITEMS_PER_PAGE, page, items  );
-        return result;
+        // TODO write some code ...
+        // Must return a ResultDBObject page
+        return null;
     }
 
     @GET
     @Path("/{id}")
     @ApiOperation(value = "Return one Character based on his _id")
     public DBObject get(@PathParam("id") int id) {
-        DBObject query = QueryBuilder.start().put("_id").is(id).get();
-        return charactersCollection.findOne(query);
+        // TODO write some code ...
+        // Must return a DBObject (a character document)
+        return null;
     }
 
     @GET
     @Path("/random")
     @ApiOperation(value = "Return one Character randomly")
     public DBObject findOneRandomly() {
-
-        // 1- Count characters
-        long count = charactersCollection.count();
-
-        // 2- Find one character randomly
-        Random rand = new Random();
-        int random = rand.nextInt(((int)count - 1) + 1) + 1;
-        return charactersCollection.find().skip(random).limit(1).next() ;
+        // TODO write some code ...
+        // Must return a DBObject (a character document)
+        return null;
     }
 
     @GET
@@ -86,17 +75,11 @@ public class CharactersService {
     @ApiOperation(value = "Search Character by name")
     public DBObject search( @DefaultValue("1") @QueryParam("page") int page,
                           @QueryParam("name") String name ) {
-        DBObject query = QueryBuilder.start()
-                                          .put("name")
-                                                .regex( java.util.regex.Pattern.compile(name, Pattern.CASE_INSENSITIVE) )
-                                          .get();
-
-        long count = charactersCollection.count( query );
-        int skip = ITEMS_PER_PAGE * (page -1);
-        DBCursor cursor = charactersCollection.find(query).skip(skip).limit(ITEMS_PER_PAGE);
-        List<DBObject> items = cursor.toArray( cursor.size() );
-        ResultDBObject result = new ResultDBObject( count, ITEMS_PER_PAGE, page, items  );
-        return result;
+        // TODO write some code ...
+        // Must return a ResultDBObject page
+        // you can use a regexp using QueryBuilder
+        // and  java.util.regex.Pattern.compile(name, Pattern.CASE_INSENSITIVE)
+        return null;
     }
 
 
@@ -104,17 +87,13 @@ public class CharactersService {
     @Path("/{id}/story")
     @ApiOperation(value = "Set a story related to the character")
     public WriteResult putStory( @PathParam("id") int id, Story story){
+        // TODO write some code ...
+        // Must return the update result
+
         Morphia morphia = new Morphia();
+        DBObject objectToSave = morphia.toDBObject(story);
 
-        DBObject query = QueryBuilder.start().put("_id").is(id).get();
-        DBObject update = BasicDBObjectBuilder.start()
-                                    .push("$set")
-                                        .add("story", morphia.toDBObject(story) )
-                                    .get();
-
-        WriteResult result = charactersCollection.update( query , update );
-
-        return result;
+        return null;
     }
 
 
