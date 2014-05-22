@@ -44,22 +44,30 @@ var CharactersRoutes = function (charactersService) {
         });
     };
 
-    var _putStory = function(req, res) {
+    var _putStory = function (req, res) {
         var id = parseInt(req.param('id'), 10);
         var story = req.body;
         story.modified = new Date();
-        charactersService.putStory( id, story, function (characters) {
-          res.status(200).send(characters);
+        charactersService.putStory(id, story, function (result) {
+            res.status(200).send(result);
         });
     }
 
+    var _create = function (req, res) {
+        var character = req.body;
+        character.modified = new Date();
+        charactersService.create(character, function (result) {
+            res.status(201).send(result);
+        })
+    }
 
     return {
         iAmFeelingLucky: _iAmFeelingLucky,
         get: _get,
         search: _search,
         getAll: _getAll,
-        putStory : _putStory
+        putStory: _putStory,
+        create: _create
     };
 
 };

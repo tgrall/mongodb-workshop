@@ -1,0 +1,22 @@
+<h1><span class="glyphicon glyphicon-user"></span> Characters</h1>
+
+<div data-ng-controller="CharactersCreateCtrl">
+    <h2>Create a new character</h2>
+
+    <form role="form">
+        <div class="form-group">
+            <label for="id">Name</label>
+            <input data-ng-model="character._id" type="text" class="form-control" id="id" placeholder="Enter character id" style="width: 50%;">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input data-ng-model="character.name" type="text" class="form-control" id="name" placeholder="Enter character name" style="width: 50%;">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea data-ng-model="character.description" class="form-control" rows="3" id="description" style="width: 50%;"></textarea>
+        </div>
+        <button class="btn btn-warning" data-ng-click="save()">Save !</button>
+    </form>
+
+</div>

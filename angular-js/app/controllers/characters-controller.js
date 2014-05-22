@@ -55,12 +55,28 @@ charactersControllers.controller(
                 $scope.character = character;
             });
 
-             $scope.saveStory = function() {
-               $http.put('api/characters/' + $routeParams.characterId +"/story", $scope.character.story).success(function (result) {
-                 $scope.result = result;
-               });
+            $scope.saveStory = function () {
+                $http.put('api/characters/' + $routeParams.characterId + "/story", $scope.character.story).success(function (result) {
+                    $scope.result = result;
+                });
             }
 
+        }
+    ]
+);
+
+charactersControllers.controller(
+    'CharactersCreateCtrl',
+    [
+        '$scope',
+        '$http',
+        '$location',
+        function ($scope, $http, $location) {
+            $scope.save = function () {
+                $http.post('api/characters', $scope.character).success(function () {
+                    $location.path('characters/' + $scope.character._id);
+                });
+            }
         }
     ]
 );

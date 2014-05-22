@@ -75,19 +75,42 @@ var CharactersService = function () {
     var _putStory = function (id, story, callback) {
         mongoDbConnection(function (connection) {
             var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
-            collection.update( { '_id' : id } , { '$set' : { 'story' : story } } , function(err, result) {
+            collection.update({ '_id': id }, { '$set': { 'story': story } }, function (err, result) {
                 if (err) throw new Error(err);
                 callback(result);
             });
         });
     };
 
+    var _create = function (character, callback) {
+        mongoDbConnection(function (connection) {
+            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            character._id = Number(character._id);
+            collection.insert(character, function (err, result) {
+                if (err) throw new Error(err);
+                callback(result);
+            });
+        });
+    }
+
+    var _delete = function (id, callback) {
+        mongoDbConnection(function (connection) {
+            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            collection.remove({ '_id': id }, function (err, result) {
+                if (err) throw new Error(err);
+                callback(result);
+            });
+        });
+    }
+
     return {
         findOneRandomly: _findOneRandomly,
         findById: _findById,
         findByName: _findByName,
         findAll: _findAll,
-        putStory: _putStory
+        putStory: _putStory,
+        create: _create,
+        delete: _delete
     };
 };
 
