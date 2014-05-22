@@ -31,6 +31,7 @@ app.get('/api/characters/search', charactersRoute.search);
 app.get('/api/characters', charactersRoute.getAll);
 app.get('/api/characters/:id', charactersRoute.get);
 app.put('/api/characters/:id/story', charactersRoute.putStory);
+app.post('/api/characters', charactersRoute.create);
 var comicsRoutes = new ComicsRoutes(comicsService);
 app.get('/api/comics/search', comicsRoutes.search);
 app.get('/api/comics/:id', comicsRoutes.get);

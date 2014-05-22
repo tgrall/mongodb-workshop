@@ -17,6 +17,10 @@ mongodbWorkshopApp.config(['$routeProvider',
                 templateUrl: 'partials/characters-list.html',
                 controller: 'CharactersListCtrl'
             }).
+            when('/characters/create', {
+                templateUrl: 'partials/characters-create.html',
+                controller: 'CharactersCreateCtrl'
+            }).
             when('/characters/:characterId', {
                 templateUrl: 'partials/characters-details.html',
                 controller: 'CharactersDetailsCtrl'

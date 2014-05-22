@@ -77,4 +77,23 @@ describe('CharactersService', function () {
         });
     });
 
+    describe('#create()', function () {
+        it('should create a character', function (done) {
+            charactersService.delete(666, function () {
+                var character = {
+                    _id: 666,
+                    name: 'devil'
+                };
+                charactersService.create(character, function () {
+                    charactersService.findById(666, function (retrievedCharacter) {
+                        assert(retrievedCharacter !== null);
+                        assert.equal(retrievedCharacter._id, 666);
+                        assert.equal(retrievedCharacter.name, 'devil');
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
 });
