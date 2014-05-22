@@ -19,6 +19,8 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 
 import java.net.UnknownHostException;
 
@@ -30,11 +32,20 @@ public class MongoConnectionManager extends ResourceConfig {
             @Override
             protected void configure() {
                 try {
-                    DB db = new MongoClient("localhost").getDB("comics");
+                    MongoClient mongoClient = new MongoClient("localhost");
+                    DB db = mongoClient.getDB("comics");
 
                     bind(db.getCollection("characters")).to(DBCollection.class).named("mongodb/characters");
                     bind(db.getCollection("comics")).to(DBCollection.class).named("mongodb/comics");
                     bind(db.getCollection("creators")).to(DBCollection.class).named("mongodb/creators");
+
+                    //Morphia datastore
+                    Morphia morphia = new Morphia();
+                    Datastore datastore = morphia.createDatastore(mongoClient, "comics");
+                    bind( datastore ).to(Datastore.class).named("morphia/datastore");
+
+
+
 
                 } catch (UnknownHostException e) {
                     throw new RuntimeException(e);

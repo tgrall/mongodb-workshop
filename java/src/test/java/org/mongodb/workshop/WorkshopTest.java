@@ -17,18 +17,28 @@ package org.mongodb.workshop;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import org.junit.BeforeClass;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 
 import java.net.UnknownHostException;
 
 public abstract class WorkshopTest {
 
     protected static DB db;
+    protected static Datastore datastore;
 
     @BeforeClass
     public static void setDB() {
 
         try {
-            db = new MongoClient("localhost").getDB("comics");
+            MongoClient mongoClient = new MongoClient("localhost");
+            db = mongoClient.getDB("comics");
+
+            //Morphia datastore
+            Morphia morphia = new Morphia();
+            datastore = morphia.createDatastore(mongoClient, "comics");
+
+
         } catch (UnknownHostException e) {
             System.out.println("Cannot connect to the database, please check that mongod process is running");
             e.printStackTrace();

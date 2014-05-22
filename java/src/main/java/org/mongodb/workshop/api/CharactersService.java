@@ -17,7 +17,9 @@ package org.mongodb.workshop.api;
 import com.mongodb.*;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.workshop.model.CharacterLight;
 import org.mongodb.workshop.model.ResultDBObject;
 import org.mongodb.workshop.model.Story;
 
@@ -39,6 +41,10 @@ public class CharactersService {
     @Named("mongodb/characters")
     @Inject
     DBCollection charactersCollection;
+
+    @Named("morphia/datastore")
+    @Inject
+    Datastore datastore;
 
 
     @GET
@@ -110,5 +116,16 @@ public class CharactersService {
 
         return result;
     }
+
+
+    @POST
+    @Path("/")
+    @ApiOperation(value = "Create a new character")
+    public int insertCharacter( CharacterLight character) {
+       datastore.save(character);
+       return character.getId();
+
+    }
+
 
 }
