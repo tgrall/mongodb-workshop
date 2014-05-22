@@ -44,11 +44,22 @@ var CharactersRoutes = function (charactersService) {
         });
     };
 
+    var _putStory = function(req, res) {
+        var id = parseInt(req.param('id'), 10);
+        var story = req.body;
+        story.modified = new Date();
+        charactersService.putStory( id, story, function (characters) {
+          res.status(200).send(characters);
+        });
+    }
+
+
     return {
         iAmFeelingLucky: _iAmFeelingLucky,
         get: _get,
         search: _search,
-        getAll: _getAll
+        getAll: _getAll,
+        putStory : _putStory
     };
 
 };

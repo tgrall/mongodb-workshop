@@ -14,13 +14,12 @@
 
 package org.mongodb.workshop.api;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
+import com.mongodb.*;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import org.mongodb.morphia.Morphia;
 import org.mongodb.workshop.model.ResultDBObject;
+import org.mongodb.workshop.model.Story;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -59,7 +58,7 @@ public class CharactersService {
     @ApiOperation(value = "Return one Character based on his _id")
     public DBObject get(@PathParam("id") int id) {
         DBObject query = QueryBuilder.start().put("_id").is(id).get();
-        return charactersCollection.findOne( query );
+        return charactersCollection.findOne(query);
     }
 
     @GET
@@ -91,6 +90,24 @@ public class CharactersService {
         DBCursor cursor = charactersCollection.find(query).skip(skip).limit(ITEMS_PER_PAGE);
         List<DBObject> items = cursor.toArray( cursor.size() );
         ResultDBObject result = new ResultDBObject( count, ITEMS_PER_PAGE, page, items  );
+        return result;
+    }
+
+
+    @PUT
+    @Path("/{id}/story")
+    @ApiOperation(value = "Set a story related to the character")
+    public WriteResult putStory( @PathParam("id") int id, Story story){
+        Morphia morphia = new Morphia();
+
+        DBObject query = QueryBuilder.start().put("_id").is(id).get();
+        DBObject update = BasicDBObjectBuilder.start()
+                                    .push("$set")
+                                        .add("story", morphia.toDBObject(story) )
+                                    .get();
+
+        WriteResult result = charactersCollection.update( query , update );
+
         return result;
     }
 

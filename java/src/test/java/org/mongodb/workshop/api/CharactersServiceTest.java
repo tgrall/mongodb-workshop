@@ -14,10 +14,13 @@
 
 package org.mongodb.workshop.api;
 
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mongodb.workshop.WorkshopTest;
+import org.mongodb.workshop.model.Story;
 
 import static org.junit.Assert.*;
 
@@ -57,4 +60,32 @@ public class CharactersServiceTest extends WorkshopTest {
     }
 
 
+    @Test
+    public void testAddStory() throws Exception {
+        int id = 1009144;
+
+        DBObject query = QueryBuilder.start().put("_id").is(id).get();
+        DBObject unsetUpdate = BasicDBObjectBuilder.start()
+                                    .push("$unset")
+                                        .append("story","")
+                                    .get();
+
+        //remove the story in case it is present
+        service.charactersCollection.update( query , unsetUpdate  );
+        DBObject obj = service.get(1009144);
+        assertNull(obj.get("story"));
+
+        // do the update
+        Story story = new Story("This is a new story for the character!");
+        service.putStory( id , story  );
+        obj = service.get(1009144);
+        assertNotNull(obj.get("story"));
+
+    }
+
+    @Test
+    public void testCreateNewCharacter() throws Exception {
+
+
+    }
 }

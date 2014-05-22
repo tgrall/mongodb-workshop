@@ -72,11 +72,22 @@ var CharactersService = function () {
         });
     };
 
+    var _putStory = function (id, story, callback) {
+        mongoDbConnection(function (connection) {
+            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            collection.update( { '_id' : id } , { '$set' : { 'story' : story } } , function(err, result) {
+                if (err) throw new Error(err);
+                callback(result);
+            });
+        });
+    };
+
     return {
         findOneRandomly: _findOneRandomly,
         findById: _findById,
         findByName: _findByName,
-        findAll: _findAll
+        findAll: _findAll,
+        putStory: _putStory
     };
 };
 

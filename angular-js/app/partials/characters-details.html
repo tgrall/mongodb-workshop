@@ -12,20 +12,34 @@
         </div>
     </div>
 
-    <div data-ng-show="character.comics.returned > 0">
-        <h3>Related comics</h3>
+    <div class="row">
+      <div class="col-md-5">
+        <div data-ng-show="character.comics.returned > 0">
+            <h3>Related comics</h3>
 
-        <p data-ng-show="character.comics.returned != character.comics.available">
-            This is just a sampled list ... ({{character.comics.returned}} / {{character.comics.available}})
-        </p>
+            <p data-ng-show="character.comics.returned != character.comics.available">
+                This is just a sampled list ... ({{character.comics.returned}} / {{character.comics.available}})
+            </p>
 
-        <ul>
-            <li data-ng-repeat="comic in character.comics.items">
-                <a data-ng-href="#/comics/{{comic.id}}">
-                    {{comic.name}}
-                </a>
-            </li>
-        </ul>
+            <ul>
+                <li data-ng-repeat="comic in character.comics.items">
+                    <a data-ng-href="#/comics/{{comic.id}}">
+                        {{comic.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <h3>Your Story</h3>
+        <form role="form" class="well">
+            <div class="form-group">
+		        <label>Tell us your story:</label>
+		        <textarea ng-model="character.story.content" class="form-control" id="content"  />
+            </div>
+		        <button type="submit" class="btn" ng-click="saveStory()">Save</button>
+		    </form>
+      </div>
     </div>
 
 </div>

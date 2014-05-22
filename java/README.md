@@ -21,9 +21,13 @@ Build:
 `mvn clean package`
 
 Run:
-`mvn exec:java -Dexec.mainClass="org.mongodb.workshop.Main`
+`mvn exec:java -Dexec.mainClass="org.mongodb.workshop.Main"  -Dmaven.repo.local=repository`
 
 
+
+### Build and refresh repository
+
+`mvn clean install dependency:go-offline -Dmaven.repo.local=repository -Pdev`
 
 
 Note: [All Data provided by Marvel. © 2014 MARVEL](http://marvel.com)

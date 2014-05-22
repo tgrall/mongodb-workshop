@@ -54,6 +54,13 @@ charactersControllers.controller(
             $http.get('api/characters/' + $routeParams.characterId).success(function (character) {
                 $scope.character = character;
             });
+
+             $scope.saveStory = function() {
+               $http.put('api/characters/' + $routeParams.characterId +"/story", $scope.character.story).success(function (result) {
+                 $scope.result = result;
+               });
+            }
+
         }
     ]
 );
