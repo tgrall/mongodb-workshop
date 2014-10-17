@@ -576,8 +576,7 @@ db.comics.aggregate(
    { "$group" : { "_id" : "$format" , "count" : { "$sum" : 1 } } }
   ,{ "$sort" : { "count" : -1 } }
   ,{ "$limit" : 3 }
-] );				</pre>
-			  	</pre>
+] );</pre>
     		  </div>
 				<br/>
 				<br/>
