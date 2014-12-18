@@ -159,7 +159,7 @@ message
         How to find all the users with the first name equals to "John".
         <div><button class="button" onclick="$('#crud-sol-1').toggle();">Show/Hide Solution</button></div>
         <div id="crud-sol-1" style="display:none;" >
-        <pre>db.users.find( { "firstName" : "David" }  );</pre>
+        <pre>db.users.find( { "firstName" : "John" }  );</pre>
         </div>
 
         <br/><br/>
@@ -178,7 +178,7 @@ message
 
       <li>Delete<br/>
         Remove some documents:
-        <pre>db.users.remove( { "name" : "David" }  );</pre>
+        <pre>db.users.remove( { "firstName" : "David" }  );</pre>
         Delete the collection:
         <pre>db.users.drop();</pre>
         <br/><br/>
