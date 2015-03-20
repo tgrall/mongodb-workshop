@@ -656,8 +656,7 @@ db.characters.ensureIndex( { "name" : "text", "description" : "text"  } );
 			<li>Search all comics related to "Firebird"
 				<pre>db.comics.find( { "$text" : { "$search" : "firebird "  }   } , { "title" : 1} );
 				</pre>
-        The full text feature is case insentive so you can search FIREBIRB, Firebird, fi
-        rebird and it will return the same result.
+        The full text feature is case insentive so you can search FIREBIRB, Firebird, firebird and it will return the same result.
         But also independently of the singular or plural, you can for example test with firebirds
 				<br/>
 			</li>
