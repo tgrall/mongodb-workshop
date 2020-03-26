@@ -38,11 +38,11 @@
             <li>Decompress MongoDB, or run the installer<br/></li>
             <li>Go to the MongoDB bin directory or put in your $PATH<br/></li>
 	  	  		<li>Create a data directory to store the data files
-	  	  		<div><code>mkdir -p /data/db</code></div>
+	  	  		<div><code>mkdir -p ./data/db</code></div>
             <i>(Adapt to your environment)</i>
             <br/></li>
 	  	  		<li>Start MongoDB server using the <code>mongod</code> executable<br/></li>
-	  	  		<code>mongod --dbpath /data/db</code>
+	  	  		<code>mongod --dbpath ./data/db</code>
 	  	  </ul>
 	  </section>
 
@@ -454,7 +454,7 @@ db.users.findOne( { category : "Junior" }  );
           		<pre>
 unzip $WORKSHOP_HOME/data/comics.zip
 
-mongorestore $WORKSHOP_HOME/data/comics
+mongorestore -d comics $WORKSHOP_HOME/data/comics
               </pre>
  				<br/>
 
@@ -710,7 +710,7 @@ db.characters.dropIndex({ "_fts" : "text", "_ftsx" : 1 });
     <pre>
 unzip $WORKSHOP_HOME/data/geo.zip
 
-mongorestore $WORKSHOP_HOME/data/geo
+mongorestore -d airports $WORKSHOP_HOME/data/geo
     </pre>
 		This database contains 3 collections:
 		<ul>
@@ -725,6 +725,8 @@ mongorestore $WORKSHOP_HOME/data/geo
        The thre collections have an attribute "loc" that contains a GeoJSON definition, a Point for the cities and aiports, a Polygon for the states.
        Let's create new indexes to allow and improve the query efficiency :
        <pre>
+use airports
+
 db.states.createIndex( { "loc" : "2dsphere" } );
 
 db.airports.createIndex( { "loc" : "2dsphere" } );
