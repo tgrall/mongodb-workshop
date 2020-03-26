@@ -2,6 +2,7 @@
 
 var ComicsService = function () {
 
+    var DB = 'comics';
     var COMICS_COLLECTION_NAME = 'comics';
 
     var mongoDbConnection = require('./mongoConnection.js');
@@ -17,7 +18,8 @@ var ComicsService = function () {
 
     var _findById = function (id, callback) {
         mongoDbConnection(function (connection) {
-            connection.collection(COMICS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
+            var db = connection.db(DB);
+            db.collection(COMICS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
                 if (err) throw new Error(err);
                 callback(item);
             });
@@ -26,7 +28,8 @@ var ComicsService = function () {
 
     var _searchByText = function (keyword, limit, skip, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(COMICS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(COMICS_COLLECTION_NAME);
             var searchQuery = {
                 $text: {
                     $search: keyword
@@ -43,10 +46,11 @@ var ComicsService = function () {
                 }
             };
             // 1- Count results
-            collection.count(searchQuery, function (err, count) {
-                if (err) throw new Error(err);
-                // 2- Search and paginate comics
-                collection.find(searchQuery, projectQuery).sort(sortQuery).limit(limit).skip(skip).toArray(function (err, items) {
+            collection.countDocuments(searchQuery, function (err, count) {
+            if (err) throw new Error(err);
+            // 2- Search and paginate comics
+            // TODO : add sort
+                collection.find(searchQuery, projectQuery).limit(limit).skip(skip).toArray(function (err, items) {
                     if (err) throw new Error(err);
                     callback(toComicPage(items, count, limit, skip));
                 });
@@ -56,7 +60,8 @@ var ComicsService = function () {
 
     var _aggregatePrintPrices = function (callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(COMICS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(COMICS_COLLECTION_NAME);
             collection.aggregate(
                 [
                     {$unwind: "$prices"},
@@ -64,9 +69,12 @@ var ComicsService = function () {
                     {$group: {_id: "$prices.price", total: {$sum: 1}}},
                     {$sort: {_id: 1}}
                 ],
-                function (err, result) {
+                {},
+                function (err, cursor) {
                     if (err) throw new Error(err);
-                    callback(result);
+                    cursor.toArray(function(err, documens) {
+                        callback(documens);
+                    });
                 }
             );
         });

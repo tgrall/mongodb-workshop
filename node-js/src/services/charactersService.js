@@ -2,6 +2,7 @@
 
 var CharactersService = function () {
 
+    var DB = 'comics';
     var CHARACTERS_COLLECTION_NAME = 'characters';
 
     var mongoDbConnection = require('./mongoConnection.js');
@@ -17,7 +18,8 @@ var CharactersService = function () {
 
     var _findOneRandomly = function (callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(CHARACTERS_COLLECTION_NAME);
             // 1- Count characters
             collection.count(function (err, count) {
                 if (err) throw new Error(err);
@@ -34,7 +36,8 @@ var CharactersService = function () {
 
     var _findById = function (id, callback) {
         mongoDbConnection(function (connection) {
-            connection.collection(CHARACTERS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
+            var db = connection.db(DB);
+            db.collection(CHARACTERS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
                 if (err) throw new Error(err);
                 callback(item);
             });
@@ -43,7 +46,8 @@ var CharactersService = function () {
 
     var _findByName = function (name, limit, skip, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(CHARACTERS_COLLECTION_NAME);
             var searchQuery = name ? {"name": new RegExp(name, "i")} : {};
             // 1- Count characters
             collection.count(searchQuery, function (err, count) {
@@ -59,7 +63,8 @@ var CharactersService = function () {
 
     var _findAll = function (limit, skip, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(CHARACTERS_COLLECTION_NAME);
             // 1- Count characters
             collection.count(function (err, count) {
                 if (err) throw new Error(err);
@@ -74,8 +79,9 @@ var CharactersService = function () {
 
     var _putStory = function (id, story, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
-            collection.update({ '_id': id }, { '$set': { 'story': story } }, function (err, result) {
+            var db = connection.db(DB);
+            var collection = db.collection(CHARACTERS_COLLECTION_NAME);
+            collection.updateOne({ '_id': id }, { '$set': { 'story': story } }, function (err, result) {
                 if (err) throw new Error(err);
                 callback(result);
             });
