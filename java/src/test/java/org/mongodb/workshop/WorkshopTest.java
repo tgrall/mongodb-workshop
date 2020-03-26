@@ -39,7 +39,7 @@ public abstract class WorkshopTest {
             datastore = morphia.createDatastore(mongoClient, "comics");
 
 
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             System.out.println("Cannot connect to the database, please check that mongod process is running");
             e.printStackTrace();
         }

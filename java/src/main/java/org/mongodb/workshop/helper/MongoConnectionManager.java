@@ -47,7 +47,7 @@ public class MongoConnectionManager extends ResourceConfig {
 
 
 
-                } catch (UnknownHostException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

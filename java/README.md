@@ -9,9 +9,9 @@ During the build process the AngujarJS UI is copied in to the target folder.
 
 ### Requirements:
 
-1. Java 7 or later
+1. Java 8 or later
 2. Maven 3
-3. MongoDB 2.6.x
+3. MongoDB 4.0.x
 
 
 
@@ -21,7 +21,7 @@ Build:
 `mvn clean package`
 
 Run:
-`mvn exec:java -Dexec.mainClass="org.mongodb.workshop.Main"  -Dmaven.repo.local=repository`
+`mvn exec:java -Dexec.mainClass="org.mongodb.workshop.Main" `
 
 
 
