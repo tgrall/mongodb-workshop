@@ -2,6 +2,7 @@
 
 var CharactersService = function () {
 
+    var DB = 'comics';
     var CHARACTERS_COLLECTION_NAME = 'characters';
 
     var mongoDbConnection = require('./mongoConnection.js');
@@ -58,7 +59,8 @@ var CharactersService = function () {
 
     var _delete = function (id, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CHARACTERS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = connection.db(CHARACTERS_COLLECTION_NAME);
             collection.remove({ '_id': id }, function (err, result) {
                 if (err) throw new Error(err);
                 callback(result);

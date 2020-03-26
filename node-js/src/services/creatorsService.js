@@ -2,6 +2,7 @@
 
 var CreatorsService = function () {
 
+    var DB = 'comics';
     var CREATORS_COLLECTION_NAME = 'creators';
 
     var mongoDbConnection = require('./mongoConnection.js');
@@ -17,7 +18,8 @@ var CreatorsService = function () {
 
     var _findById = function (id, callback) {
         mongoDbConnection(function (connection) {
-            connection.collection(CREATORS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
+            var db = connection.db(DB);
+            db.collection(CREATORS_COLLECTION_NAME).findOne({'_id': id}, function (err, item) {
                 if (err) throw new Error(err);
                 callback(item);
             });
@@ -26,7 +28,8 @@ var CreatorsService = function () {
 
     var _findByComicsName = function (comicsName, limit, skip, callback) {
         mongoDbConnection(function (connection) {
-            var collection = connection.collection(CREATORS_COLLECTION_NAME);
+            var db = connection.db(DB);
+            var collection = db.collection(CREATORS_COLLECTION_NAME);
             var searchQuery = comicsName ? {"comics.items.name": new RegExp(comicsName, "i")} : {};
             // 1- Count creators
             collection.count(searchQuery, function (err, count) {

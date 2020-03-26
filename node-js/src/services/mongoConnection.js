@@ -14,7 +14,7 @@ module.exports = function (callback) {
         return;
     }
 
-    MongoClient.connect(conf.MONGO_URL, function (err, databaseConnection) {
+    MongoClient.connect(conf.MONGO_URL, { useUnifiedTopology: true }, function (err, databaseConnection) {
         if (err) throw new Error(err);
         connectionInstance = databaseConnection;
         callback(databaseConnection);
