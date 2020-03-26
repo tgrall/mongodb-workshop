@@ -38,11 +38,11 @@
             <li>Decompress MongoDB, or run the installer<br/></li>
             <li>Go to the MongoDB bin directory or put in your $PATH<br/></li>
 	  	  		<li>Create a data directory to store the data files
-	  	  		<div><code>mkdir -p /data/db</code></div>
+	  	  		<div><code>mkdir -p ./data/db</code></div>
             <i>(Adapt to your environment)</i>
             <br/></li>
 	  	  		<li>Start MongoDB server using the <code>mongod</code> executable<br/></li>
-	  	  		<code>mongod --dbpath /data/db</code>
+	  	  		<code>mongod --dbpath ./data/db</code>
 	  	  </ul>
 	  </section>
 
@@ -159,7 +159,7 @@ message
         How to find all the users with the first name equals to "John".
         <div><button class="button" onclick="$('#crud-sol-1').toggle();">Show/Hide Solution</button></div>
         <div id="crud-sol-1" style="display:none;" >
-        <pre>db.users.find( { "firstName" : "David" }  );</pre>
+        <pre>db.users.find( { "firstName" : "John" }  );</pre>
         </div>
 
         <br/><br/>
@@ -178,7 +178,7 @@ message
 
       <li>Delete<br/>
         Remove some documents:
-        <pre>db.users.remove( { "name" : "David" }  );</pre>
+        <pre>db.users.remove( { "firstName" : "David" }  );</pre>
         Delete the collection:
         <pre>db.users.drop();</pre>
         <br/><br/>
@@ -454,7 +454,7 @@ db.users.findOne( { category : "Junior" }  );
           		<pre>
 unzip $WORKSHOP_HOME/data/comics.zip
 
-mongorestore $WORKSHOP_HOME/data/comics
+mongorestore -d comics $WORKSHOP_HOME/data/comics
               </pre>
  				<br/>
 
@@ -576,8 +576,7 @@ db.comics.aggregate(
    { "$group" : { "_id" : "$format" , "count" : { "$sum" : 1 } } }
   ,{ "$sort" : { "count" : -1 } }
   ,{ "$limit" : 3 }
-] );				</pre>
-			  	</pre>
+] );</pre>
     		  </div>
 				<br/>
 				<br/>
@@ -657,8 +656,7 @@ db.characters.ensureIndex( { "name" : "text", "description" : "text"  } );
 			<li>Search all comics related to "Firebird"
 				<pre>db.comics.find( { "$text" : { "$search" : "firebird "  }   } , { "title" : 1} );
 				</pre>
-        The full text feature is case insentive so you can search FIREBIRB, Firebird, fi
-        rebird and it will return the same result.
+        The full text feature is case insentive so you can search FIREBIRB, Firebird, firebird and it will return the same result.
         But also independently of the singular or plural, you can for example test with firebirds
 				<br/>
 			</li>
@@ -712,7 +710,7 @@ db.characters.dropIndex({ "_fts" : "text", "_ftsx" : 1 });
     <pre>
 unzip $WORKSHOP_HOME/data/geo.zip
 
-mongorestore $WORKSHOP_HOME/data/geo
+mongorestore -d airports $WORKSHOP_HOME/data/geo
     </pre>
 		This database contains 3 collections:
 		<ul>
@@ -727,6 +725,8 @@ mongorestore $WORKSHOP_HOME/data/geo
        The thre collections have an attribute "loc" that contains a GeoJSON definition, a Point for the cities and aiports, a Polygon for the states.
        Let's create new indexes to allow and improve the query efficiency :
        <pre>
+use airports
+
 db.states.createIndex( { "loc" : "2dsphere" } );
 
 db.airports.createIndex( { "loc" : "2dsphere" } );
