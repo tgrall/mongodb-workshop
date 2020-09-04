@@ -3,7 +3,7 @@
     "description": "MongoDB Marvel Comit Importer",
     "version": "1.0.0",
     "dependencies": {
-        "mongodb": "1.4.2",
+        "mongodb": "3.6.1",
         "marvel-api": "0.2.2"
     }
 }
