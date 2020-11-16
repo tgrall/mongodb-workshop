@@ -180,7 +180,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jetty.version>9.0.2.v20130417</jetty.version>
+        <jetty.version>9.4.34.v20201102</jetty.version>
         <jackson.version>2.2.3</jackson.version>
         <jersey.version>2.6</jersey.version>
         <mongodb.driver.version>3.12.2</mongodb.driver.version>
